@@ -3,6 +3,8 @@ package com.codecademy.goldmedal.controller;
 import com.codecademy.goldmedal.model.*;
 import org.apache.commons.text.WordUtils;
 import org.springframework.web.bind.annotation.*;
+import com.codecademy.goldmedal.repositories.CountryRepository;
+import com.codecademy.goldmedal.repositories.GoldMedalRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +14,14 @@ import java.util.stream.Collectors;
 @RequestMapping("/countries")
 public class GoldMedalController {
     // TODO: declare references to your repositories
+    private final CountryRepository countryRepository;
+    private final GoldMedalRepository goldMedalRepository;
+
 
     // TODO: update your constructor to include your repositories
     public GoldMedalController() {
+        this.countryRepository = countryRepository;
+        this.goldMedalRepository = goldMedalRepository;
     }
 
     @GetMapping
@@ -40,19 +47,25 @@ public class GoldMedalController {
         List<GoldMedal> medalsList;
         switch (sortBy) {
             case "year":
-                medalsList = // TODO: list of medals sorted by year in the given order
+                medalsList = ascendingOrder ? goldMedalRepository.getByCountryOrderByYearAsc(countryName) : goldMedalRepository.getByCountryOrderByYearDesc(countryName);
+            // TODO: list of medals sorted by year in the given order
+
                 break;
             case "season":
-                medalsList = // TODO: list of medals sorted by season in the given order
+                medalsList = ascendingOrder ?  goldMedalRepository.getByCountryOrderBySeasonAsc(countryName) : goldMedalRepository.getByCountryOrderBySeasonDesc(countryName)
+            // TODO: list of medals sorted by season in the given order
                 break;
             case "city":
-                medalsList = // TODO: list of medals sorted by city in the given order
+                medalsList = ascendingOrder ? goldMedalRepository.getByCountryOrderByCityAsc(countryName) : goldMedalRepository.getByCountryOrderByCityDesc(countryName);
+            // TODO: list of medals sorted by city in the given order
                 break;
             case "name":
-                medalsList = // TODO: list of medals sorted by athlete's name in the given order
+                medalsList = ascendingOrder ? goldMedalRepository.getByCountryOrderByNameAsc(countryName) : goldMedalRepository.getByCountryOrderByNameDesc(countryName);
+            // TODO: list of medals sorted by athlete's name in the given order
                 break;
             case "event":
-                medalsList = // TODO: list of medals sorted by event in the given order
+                medalsList = ascendingOrder ? goldMedalRepository.getByCountryOrderByEventAsc(countryName) : goldMedalRepository.getByCountryOrderByEventDesc(countryName);
+            // TODO: list of medals sorted by event in the given order
                 break;
             default:
                 medalsList = new ArrayList<>();
